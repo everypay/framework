@@ -1,0 +1,21 @@
+{
+    "name": "everypay/framework",
+    "description": "Everypay's PSR-15 framework",
+    "authors": [
+        {
+            "name": "kmavrofridis",
+            "email": "kmavrofridis@everypay.gr"
+        }
+    ],
+    "require": {
+        "php": ">=7.3.0",
+        "psr/http-message": "^1.0",
+        "psr/http-server-middleware": "^1.0",
+        "psr/http-server-handler": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Everypay\\Framework\\": "src/"
+        }
+    }
+}
