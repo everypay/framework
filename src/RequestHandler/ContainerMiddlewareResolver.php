@@ -28,7 +28,7 @@ class ContainerMiddlewareResolver implements MiddlewareResolverInterface
         }
 
         throw new RuntimeException(
-            sprintf('Queue entries must be instances of %s', MiddlewareInterface::class)
+            sprintf('Queue entries type must be string or instances of %s', MiddlewareInterface::class)
         );
     }
 }

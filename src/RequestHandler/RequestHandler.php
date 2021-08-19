@@ -42,16 +42,6 @@ class RequestHandler implements RequestHandlerInterface
         $middleware = $this->resolver->resolve($entry);
         next($this->queue);
 
-        if ($middleware instanceof MiddlewareInterface) {
-            return $middleware->process($request, $this);
-        }
-
-        throw new RuntimeException(
-            sprintf(
-                'Invalid middleware queue entry: %s. Middleware must implement %s.',
-                $middleware,
-                MiddlewareInterface::class
-            )
-        );
+        return $middleware->process($request, $this);
     }
 }
