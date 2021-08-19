@@ -23,7 +23,7 @@ class ContainerMiddlewareResolver implements MiddlewareResolverInterface
             $entry = $this->container->get($entry);
         }
 
-        if (is_object($entry) && $entry instanceof MiddlewareInterface) {
+        if ($entry instanceof MiddlewareInterface) {
             return $entry;
         }
 
