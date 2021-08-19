@@ -36,7 +36,7 @@ class RequestHandler implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $entry = current($this->queue);
-        $middleware = call_user_func($this->resolver, $entry);
+        $middleware = $this->resolver->resolve($entry);
         next($this->queue);
 
         if ($middleware instanceof MiddlewareInterface) {
