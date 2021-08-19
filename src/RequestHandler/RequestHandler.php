@@ -14,7 +14,7 @@ use RuntimeException;
 class RequestHandler implements RequestHandlerInterface
 {
     private array $queue;
-    private $resolver;
+    private MiddlewareResolverInterface $resolver;
 
     public function __construct(array $queue, MiddlewareResolverInterface $resolver = null)
     {
