@@ -13,12 +13,11 @@ use Psr\Http\Server\MiddlewareInterface;
 
 class Framework
 {
-    private array $entries;
+    private array $entries = [];
     private ContainerInterface $container;
 
     public function __construct(ContainerInterface $container)
     {
-        $this->entries = [];
         $this->container = $container;
     }
 
