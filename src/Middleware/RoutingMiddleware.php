@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Everypay\Framework\Middleware;
 
 use Everypay\Framework\Contract\Routing\RouterInterface;
