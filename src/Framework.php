@@ -22,7 +22,10 @@ class Framework
         $this->container = $container;
     }
 
-    public function add(MiddlewareInterface $middleware): void
+    /**
+     * @param string|MiddlewareInterface $middleware
+     */
+    public function add($middleware): void
     {
         $this->entries[] = $middleware;
     }
