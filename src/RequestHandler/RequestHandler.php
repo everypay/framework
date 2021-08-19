@@ -25,8 +25,11 @@ class RequestHandler implements RequestHandlerInterface
         $this->queue = $queue;
 
         if ($resolver === null) {
-            $resolver = function ($entry) {
-                return $entry;
+            $resolver = new class() implements MiddlewareResolverInterface {
+                public function resolve($entry): MiddlewareInterface
+                {
+                    return $entry;
+                }
             };
         }
 
