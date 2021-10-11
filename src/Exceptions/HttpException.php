@@ -8,10 +8,6 @@ use Exception;
 
 class HttpException extends Exception
 {
-    private array $headers = [];
-
-    private string $body = '';
-
     private array $status = [
         302 => 'Redirect',
         400 => 'Bad Request',
@@ -71,74 +67,14 @@ class HttpException extends Exception
 
     /**
      * @param int $statusCode
-     * @param null $statusPhrase
-     * @param array $headers
+     * @param $statusPhrase
      */
-    public function __construct(int $statusCode = 500, $statusPhrase = null, array $headers = [])
+    public function __construct(int $statusCode = 500, $statusPhrase = null)
     {
-        if (null === $statusPhrase && isset($this->status[$statusCode])) {
+        if (isset($this->status[$statusCode]) && $statusPhrase === null) {
             $statusPhrase = $this->status[$statusCode];
         }
-        parent::__construct($statusPhrase, $statusCode);
 
-        $header  = sprintf('HTTP/1.1 %d %s', $statusCode, $statusPhrase);
-
-        $this->addHeader($header);
-        $this->addHeaders($headers);
-    }
-
-    /**
-     * @return array
-     */
-    public function getHeaders(): array
-    {
-        return $this->headers;
-    }
-
-    /**
-     * @param string $header
-     * @return self
-     */
-    public function addHeader(string $header): HttpException
-    {
-        $this->headers[] = $header;
-
-        return $this;
-    }
-
-    /**
-     * @param array $headers
-     * @return self
-     */
-    public function addHeaders(array $headers): HttpException
-    {
-        foreach ($headers as $key => $header) {
-            if (!is_int($key)) {
-                $header = $key.': '.$header;
-            }
-
-            $this->addHeader($header);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getBody(): string
-    {
-        return $this->body;
-    }
-
-    /**
-     * @param string $body
-     * @return self
-     */
-    public function setBody(string $body): HttpException
-    {
-        $this->body = $body;
-
-        return $this;
+        parent::__construct($statusPhrase ?? '', $statusCode);
     }
 }
