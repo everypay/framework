@@ -4,8 +4,9 @@ declare(strict_types = 1);
 
 namespace Everypay\Framework\Bridge\Routing;
 
+use Everypay\Framework\Contract\Routing\HttpMethodNotAllowed;
+use Everypay\Framework\Contract\Routing\HttpNotFoundException;
 use Everypay\Framework\Contract\Routing\RouterInterface;
-use Everypay\Framework\Exceptions\HttpException;
 use FastRoute\Dispatcher;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -25,9 +26,6 @@ class FastRouteRouter implements RouterInterface
         $this->dispatcher = $dispatcher;
     }
 
-    /**
-     * @throws HttpException
-     */
     public function dispatch(ServerRequestInterface $request): void
     {
         $routeInfo = $this->dispatcher->dispatch(
@@ -37,9 +35,11 @@ class FastRouteRouter implements RouterInterface
 
         switch ($routeInfo[0]) {
             case Dispatcher::NOT_FOUND:
-                throw new HttpException(404);
+                throw new HttpNotFoundException($request->getUri()->getPath());
             case Dispatcher::METHOD_NOT_ALLOWED:
-                throw new HttpException(405);
+                throw new HttpMethodNotAllowed(
+                    sprintf("Method %s not allowed in %s.", $request->getMethod(), $request->getUri()->getPath())
+                );
             case Dispatcher::FOUND:
                 $this->action = $routeInfo[1];
                 $this->arguments = $routeInfo[2];
