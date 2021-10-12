@@ -6,4 +6,6 @@ namespace Everypay\Framework\Contract\Routing;
 
 use BadMethodCallException;
 
-class HttpMethodNotAllowed extends BadMethodCallException {}
+class HttpMethodNotAllowed extends BadMethodCallException
+{
+}

@@ -36,7 +36,7 @@ class FastRouteRouter implements RouterInterface
         switch ($routeInfo[0]) {
             case Dispatcher::NOT_FOUND:
                 throw new HttpNotFoundException(
-                    sprintf("Requested path %s is not found", $request->getUri()->getPath())
+                    sprintf("Requested path %s not found", $request->getUri()->getPath())
                 );
             case Dispatcher::METHOD_NOT_ALLOWED:
                 throw new HttpMethodNotAllowed(
