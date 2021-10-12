@@ -4,11 +4,10 @@ declare(strict_types = 1);
 
 namespace Everypay\Framework;
 
-use Everypay\Framework\Bridge\ResponseSender;
+use Everypay\Framework\Http\ResponseSender;
 use Everypay\Framework\RequestHandler\ContainerMiddlewareResolver;
 use Everypay\Framework\RequestHandler\RequestHandler;
 use Psr\Container\ContainerInterface;
-use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 
@@ -39,6 +38,6 @@ class Framework
 
         $response = $requestHandler->handle($request);
 
-        echo ResponseSender::new($response)->send();
+        echo ResponseSender::send($response);
     }
 }
