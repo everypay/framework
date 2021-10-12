@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Everypay\Framework;
 
+use Everypay\Framework\Bridge\ResponseSender;
 use Everypay\Framework\RequestHandler\ContainerMiddlewareResolver;
 use Everypay\Framework\RequestHandler\RequestHandler;
 use Psr\Container\ContainerInterface;
@@ -29,13 +30,15 @@ class Framework
         $this->entries[] = $middleware;
     }
 
-    public function run(ServerRequestInterface $request): ResponseInterface
+    public function run(ServerRequestInterface $request): void
     {
         $requestHandler = new RequestHandler(
             $this->entries,
             new ContainerMiddlewareResolver($this->container)
         );
 
-        return $requestHandler->handle($request);
+        $response = $requestHandler->handle($request);
+
+        echo ResponseSender::new($response)->send();
     }
 }
