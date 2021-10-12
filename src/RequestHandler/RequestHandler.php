@@ -4,7 +4,6 @@ declare(strict_types = 1);
 
 namespace Everypay\Framework\RequestHandler;
 
-use InvalidArgumentException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -18,7 +17,7 @@ class RequestHandler implements RequestHandlerInterface
     public function __construct(array $queue, MiddlewareResolverInterface $resolver = null)
     {
         if (empty($queue)) {
-            throw new InvalidArgumentException('$queue cannot be empty');
+            throw new EmptyQueueException('$queue cannot be empty');
         }
 
         $this->queue = $queue;
