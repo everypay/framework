@@ -8,6 +8,7 @@ use Everypay\Framework\Http\ResponseSender;
 use Everypay\Framework\RequestHandler\ContainerMiddlewareResolver;
 use Everypay\Framework\RequestHandler\RequestHandler;
 use Psr\Container\ContainerInterface;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 
@@ -29,15 +30,18 @@ class Framework
         $this->entries[] = $middleware;
     }
 
-    public function run(ServerRequestInterface $request): void
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $requestHandler = new RequestHandler(
             $this->entries,
             new ContainerMiddlewareResolver($this->container)
         );
 
-        $response = $requestHandler->handle($request);
+        return $requestHandler->handle($request);
+    }
 
-        echo ResponseSender::send($response);
+    public function run(ServerRequestInterface $request): void
+    {
+        echo ResponseSender::send($this->handle($request));
     }
 }
