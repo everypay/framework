@@ -14,7 +14,7 @@ class RequestHandler implements RequestHandlerInterface
     private array $queue;
     private MiddlewareResolverInterface $resolver;
 
-    public function __construct(array $queue, MiddlewareResolverInterface $resolver = null)
+    public function __construct(array $queue, ?MiddlewareResolverInterface $resolver = null)
     {
         if (empty($queue)) {
             throw new EmptyQueueException('$queue cannot be empty');
